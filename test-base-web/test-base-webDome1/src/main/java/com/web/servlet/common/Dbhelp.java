@@ -5,9 +5,9 @@ import java.sql.DriverManager;
 
 public class Dbhelp {
 	private static String DRIVER = "com.mysql.jdbc.Driver";
-	private static String URL = "jdbc:mysql://localhost:3306/test";
+	private static String URL = "jdbc:mysql://10.10.55.147:3306/test";
 	private static String USERNAME = "root";
-	private static String PASSWORD = "root";
+	private static String PASSWORD = "123";
 	private static Connection conn = null;
 
 	public static Connection getConnection() {
