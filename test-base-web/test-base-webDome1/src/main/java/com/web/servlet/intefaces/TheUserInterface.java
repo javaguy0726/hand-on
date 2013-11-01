@@ -1,5 +1,6 @@
 package com.web.servlet.intefaces;
 
+
 import javax.servlet.jsp.jstl.sql.Result;
 
 public interface TheUserInterface {
@@ -10,7 +11,7 @@ public interface TheUserInterface {
 
 	public int deleteUser(String sql, Object[] objects);
 
-	public int insertUserResult(String sql, Object[] objects);
+	public boolean insertUserResult(String sql, Object[] objects);
 
 	public boolean updateUserIdOrName(String sql, Object[] objects);
 }

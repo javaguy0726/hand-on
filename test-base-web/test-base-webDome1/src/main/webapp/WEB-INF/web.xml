@@ -3,19 +3,52 @@
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
 
 <web-app>
+
 	<display-name>Archetype Created Web Application</display-name>
 
 
 	<servlet>
 		<servlet-name>TheUserServlet</servlet-name>
-		<display-name>TheUserServlet</display-name>
-		<description></description>
 		<servlet-class>com.web.servlet.service.TheUserServlet</servlet-class>
 	</servlet>
+
+	<servlet>
+		<servlet-name>AddUserService</servlet-name>
+		<servlet-class>com.web.servlet.service.TheUserServlet</servlet-class>
+	</servlet>
+
+	<servlet>
+		<servlet-name>ValidationuserNameService</servlet-name>
+		<servlet-class>com.web.servlet.service.TheUserServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>aaaa</servlet-name>
+		<display-name>aaaa</display-name>
+		<description></description>
+		<servlet-class>com.web.servlet.service.aaaa</servlet-class>
+	</servlet>
+
 
 
 	<servlet-mapping>
 		<servlet-name>TheUserServlet</servlet-name>
 		<url-pattern>/Login.do</url-pattern>
 	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>AddUserService</servlet-name>
+		<url-pattern>/AddUser.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>ValidationuserNameService</servlet-name>
+		<url-pattern>/ValidationuserName.action</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>aaaa</servlet-name>
+		<url-pattern>/aaaa</url-pattern>
+	</servlet-mapping>
+
+
 </web-app>
+

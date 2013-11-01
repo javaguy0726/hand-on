@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.jsp.jstl.sql.Result;
 import javax.servlet.jsp.jstl.sql.ResultSupport;
@@ -75,20 +76,19 @@ public class TheUserIntefacesImpl implements TheUserInterface {
 
 	}
 
-	public int insertUserResult(String sql, Object[] objects) {
+	public boolean insertUserResult(String sql, Object[] objects) {
 		conn = Dbhelp.getConnection();
 		try {
 			pst = conn.prepareStatement(sql);
 			for (int i = 0; i < objects.length; i++) {
 				pst.setObject(i + 1, objects[i]);
 			}
-			return pst.executeUpdate();
+			pst.execute();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return 0;
+			return false;
 		}
-
+			return true;
 	}
 
 	public boolean updateUserIdOrName(String sql, Object[] objects) {
