@@ -2,16 +2,18 @@ package com.web.servlet.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.jsp.jstl.sql.Result;
 
 import com.web.servlet.common.UserApiServlet;
+import com.web.servlet.entity.User;
 import com.web.servlet.intefaces.TheUserInterface;
 import com.web.servlet.intefacesImpl.TheUserIntefacesImpl;
 
 public class TheUserServiceImplementation {
 	TheUserInterface userIntefaces = new TheUserIntefacesImpl();
-	List<String> list  = new ArrayList<String>();
+	List list  = new ArrayList();
 	UserApiServlet userApiServlet = new UserApiServlet();
 
 	//登錄驗證
@@ -48,14 +50,23 @@ public class TheUserServiceImplementation {
 	
 	//查詢所有的country
 	public List<String> selectAllCountry(){
-		String sql = "select country from user";
+		String sql = "select *,count(distinct country) from user group by country";
 		Result result = userIntefaces.servletUserALl(sql);
-		return userApiServlet.ResuleToList(result,"country");
+		if(result.getRowCount()>0){
+			Map[] rows = result.getRows();
+			for (Map row : rows) {
+				User user = new User();
+				String country = row.get("country").toString();
+				user.setCountry(country);
+				list.add(user);
+			}
+		}
+		return list;
 	}
 	
 	//根據country 查詢 地址。
 	public List<String> selectCountryToAddress(Object[] objects){
-		String sql = "select address from user where country =?";
+		String sql = "select DISTINCT address from user where country =?";
 		Result result = userIntefaces.servletUserAll(sql, objects);
 		return userApiServlet.ResuleToList(result, "address");
 	}

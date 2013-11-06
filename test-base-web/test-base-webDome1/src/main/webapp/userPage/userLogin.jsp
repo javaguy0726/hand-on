@@ -52,7 +52,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   		<tr>
   			<td><input type="submit" value="Sign in" onclick="return clickSubmit();"/></td>
-  			<td><input type="button" value="Registration" onclick="window.location.href='../userPage/addUserPage.jsp'"/></td>
+  			<td><input type="button" value="Registration" onclick="window.location.href='../SelectCountry.action'"/></td>
   		</tr>
   	</table>
   	

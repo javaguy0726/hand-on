@@ -31,10 +31,8 @@ public class UserServletTest {
 	@Test
 	public void selectCountry_test(){
 		list = implementation.selectAllCountry();
-		for (int i = 0; i < list.size(); i++) {
-			System.out.println(list.get(i));
+		System.out.println(list.size());
 		}
-	}
 	
 	@Test
 	public void selectCountryToAddress_test(){

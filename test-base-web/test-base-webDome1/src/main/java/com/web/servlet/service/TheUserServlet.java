@@ -2,6 +2,8 @@ package com.web.servlet.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -9,12 +11,15 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.web.servlet.common.BaseAction;
 
 /**
  * Servlet implementation class TheUserServlet
  */
 public class TheUserServlet extends HttpServlet {
 	TheUserServiceImplementation userServiceImplementation = new TheUserServiceImplementation();
+	List<String> list = new ArrayList<String>();
+	BaseAction baseAction = new BaseAction();
 	public void service(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		  PrintWriter pw = response.getWriter();
@@ -55,8 +60,18 @@ public class TheUserServlet extends HttpServlet {
 			String address = request.getParameter("address");
 			Object[] objects = {userName,passWord,sex,age,country,address};
 			if(userServiceImplementation.addUserService(objects)){
-				System.out.println("数据添加成功");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("userPage/userLogin.jsp");
+				dispatcher.forward(request, response);
 			}
+		}else if(url.equals("/SelectCountry")){
+			list = userServiceImplementation.selectAllCountry();
+		//	baseAction.getSession().put("aaa", list);
+			request.getSession().setAttribute("countryList", list);
+			String name = "123";
+			request.getSession().setAttribute("name", name);
+		//	System.out.println(countryList);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("userPage/addUserPage.jsp");
+			dispatcher.forward(request, response);
 		}
 	}
 }

@@ -11,10 +11,11 @@ public class UserApiServlet {
 	//把查詢到的result結果集轉化成list集合；
 	List<String> list  = new ArrayList<String>();
 	public List<String> ResuleToList(Result result,String field){
+		String country = null;
 	if(result.getRowCount()>0){
 		Map[] rows = result.getRows();
 		for (Map row : rows) {
-			String country = row.get(field).toString();
+			 country = row.get(field).toString();
 			list.add(country);
 		}
 	}
