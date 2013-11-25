@@ -1,15 +1,16 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
-	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://"
-			+ request.getServerName() + ":" + request.getServerPort()
-			+ path + "/";
+        String path = request.getContextPath();
+        String basePath = request.getScheme() + "://"
+                        + request.getServerName() + ":" + request.getServerPort()
+                        + path + "/";
 %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
+<link href="./style/styleTab.css" type="text/css" rel="stylesheet" />
 <base href="<%=basePath%>">
 <title>My JSP 'MyJsp.jsp' starting page</title>
 
@@ -21,142 +22,360 @@
 
 <script type="text/javascript" src='JS/jquery-1.4.1.min.js'></script>
 <script type="text/javascript">
-	$(function() {
-		//添加文本框的失焦事件
-		$("#username")
-				.blur(
-						function() {
-							//$("#username").val() 获得文本框的值，  判断是否为空  不为空时
-							if ($("#username").val().length > 0) {
-								// url 发送请求 type 请求方式， data 传梯的参数。  datatype 返回类型。  
-								//success 成功返回  绑定function data 接收返回的结果。
-								$
-										.ajax({
-											'url' : 'ValidationuserName.action',
-											'type' : 'post',
-											'data' : {'username' : $("#username").val()},
-											'datatype' : 'json',
-											'success' : function(data) {
-												if (data != "true") {
-													document
-															.getElementById("prompt").innerHTML = "You can use the user name!";
-													return true;
-												} else {
-													$("#prompt")
-															.text(
-																	"User names exist, please re-enter!");
-													document.all['prompt'].style.color = "#ff0000";
-													$("#username").val("");
-													return false;
-												}
-											}
-										});
 
-							} else {
-								alert("Username can not be empty!");
-								return false;
-							}
-						});
+function refresh(obj) {
+    obj.src = "imageServlet?"+Math.random();
+}
 
-	});
+        //創建Ajax請求對象。
+                function createXML(){
+                        if(window.XMLHttpRequest){
+                                // code for IE7+, Firefox, Chrome, Opera, Safari
+                                xmlhttp = new XMLHttpRequest();
+                        }else{
+                                // code for IE6, IE5
+                                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                        }
+                }
 
-	function onfocusText(id, str) {
-		document.getElementById(id).innerHTML = str;
-		document.all['prompt'].style.color = "#ff0000";
-	}
+                //验证用户名的方法。
+                function addUserAjax(){
+                        var str = document.getElementById("username").value;
+                        if(str.length==0){
+                                document.getElementById("img").style.display="inline";
+                                document.getElementById("img").src="image/inputImg.jpg";
+                                document.getElementById("prompt").innerHTML="<font style='color: red;font-size:12px;'>Username can not be empty!</font>";
+                                return false;
+                        }
+                        createXML();
+                        xmlhttp.onreadystatechange=function(){
+                                if(xmlhttp.readyState==4 && xmlhttp.status==200){
+                                        if(xmlhttp.responseText=="true"){
+                                                document.getElementById("img").style.display="inline";
+                                                document.getElementById("img").src="image/successImg.jpg";
+                                                document.getElementById("prompt").innerHTML="";        
+                                                return true;
+                                        }else{
+                                                //显示错误图片。
+                                                document.getElementById("img").style.display="inline";
+                                                document.getElementById("img").src="image/inputImg.jpg";
+                                                document.getElementById("prompt").innerHTML="<font style='color: red;font-size:12px;'>User name already exists!</font>";
+                                                return false;
+                                        }
+                                        
+                                }
+                        }
+                        xmlhttp.open("POST","ValidationuserName.action?name="+str,true);
+                        xmlhttp.send();
+                }
+                
+                //聚焦用户名文本框提示信息；
+                function Isonfocus(){
+                        //影藏图片，显示输入用户名信息；
+                        document.getElementById("img").style.display="none";
+                        document.getElementById("prompt").innerHTML="<font style='color: red;font-size:12px;'>Please enter your user name!</font>";
+                }
+                
+                
 
-	function onClickSubmit() {
-		var userName = document.getElementById("username").value;
-		var passWord1 = document.getElementById("passWord").value;
-		var passWord2 = document.getElementById("cfPassword").value;
-		var age = document.getElementById("age").value;
-		 if(userName.length<=0){
-			 alert("请输aaaaaa用户名");
-			 return false;
-		 }
-		if (passWord1.length <= 0) {
-			alert("密码不能为空");
-			return false;
-		}
-		if (passWord2.length <= 0) {
-			alert("重复的密码不能为空！");
-			return false;
-		}
-		if (passWord1 != passWord2) {
-			alert("两次输入的密码不一致");
-			return false;
-		}
-		if (age.length <= 0) {
-			alert("年龄不能为空");
-			return false;
-		}
-	}
+                //验证密码在4-16个字符之间。
+                function ump(){
+                        var passWord = document.getElementById("passWord").value;
+                        if(passWord.length==0){
+	                        	document.getElementById("imgPwd").style.display="inline";
+	                            document.getElementById("imgPwd").src="image/inputImg.jpg";
+                                document.getElementById("upm").innerHTML="<font style='color: red;font-size:12px;'>Password can not be blank！</font>";
+                                return false;
+                        }
+                        createXML();
+                        xmlhttp.onreadystatechange=function(){
+                                if(xmlhttp.responseText=="false"){
+                                	 	document.getElementById("imgPwd").style.display="inline";
+                                     	document.getElementById("imgPwd").src="image/inputImg.jpg";
+                                        document.getElementById("upm").innerHTML="<font style='color: red;font-size:12px;'>Password length is only 4-16!</font>";
+                                        document.getElementById("passWord").value="";
+                                        return false;
+                                }else{
+                                        document.getElementById("upm").innerHTML="";
+                                        document.getElementById("imgPwd").style.display="inline";
+                                        document.getElementById("imgPwd").src="image/successImg.jpg";
+                                        return true;
+                                }
+                        }
+                        xmlhttp.open("POST", "ValidationUserPassWord.action?pw1="+passWord, true);
+                        xmlhttp.send();
+                }
+                
+                //重复密码的验证。
+                function umpSecond(){
+                        var passWord = document.getElementById("passWord").value;
+                        var passWord2 = document.getElementById("cfPassword").value;
+                        if(passWord2.length==0){
+                        		document.getElementById("imgPwd2").style.display="inline";
+                            	document.getElementById("imgPwd2").src="image/inputImg.jpg";
+                                document.getElementById("secondpd").innerHTML="<font style='color: red;font-size:12px;'>Repeat password can not be empty!</font>";
+                                 document.getElementById("passWord").focus();
+                                  scroll(0,0);  
+                                return false;
+                        }
+                        createXML();
+                        xmlhttp.onreadystatechange=function(){
+                                        if (xmlhttp.responseText=="NoSame"){
+                                        	document.getElementById("imgPwd").style.display="inline";
+                                        	document.getElementById("imgPwd").src="image/inputImg.jpg";
+                                        	document.getElementById("imgPwd2").style.display="inline";
+                                        	document.getElementById("imgPwd2").src="image/inputImg.jpg";
+                                        document.getElementById("secondpd").innerHTML="<font style='color: red;font-size:12px;'>The two passwords do not match, please re-enter!</font>";
+                                        document.getElementById("passWord").value="";
+                                        document.getElementById("cfPassword").value="";
+                                        //清空密码文本框，光标跳转到密码文本框中。
+                                         document.getElementById("passWord").focus();
+                                          scroll(0,0);  
+                                        return false;
+                                }else{
+                                	document.getElementById("imgPwd2").style.display="inline";
+                                	document.getElementById("imgPwd2").src="image/successImg.jpg";
+                                        document.getElementById("secondpd").innerHTML="";
+                                        return true;
+                                        }
+                        }
+                        xmlhttp.open("POST", "ValidationSecondPassWord.action?secondPd="+passWord2+"&passWord="+passWord,true);
+                        xmlhttp.send();
+                }
+                
+                //检验年龄的合法性
+                function ValidationAge(){
+                        var age = document.getElementById("age").value;
+                        if(age.length==0){
+                        	document.getElementById("imgAge").style.display="inline";
+                        	document.getElementById("imgAge").src="image/inputImg.jpg";
+                                document.getElementById("userAge").innerHTML="<font style='color: red;font-size:12px;'>Age can not be blank!</font>";
+                                return false;
+                        }
+                        createXML();
+                        xmlhttp.onreadystatechange=function(){
+                                if(xmlhttp.responseText=="false"){
+                                	document.getElementById("imgAge").style.display="inline";
+                                	document.getElementById("imgAge").src="image/inputImg.jpg";
+                                        document.getElementById("userAge").innerHTML="<font style='color: red;font-size:12px;'>Age is not legitimate, please re-enter!</font>";
+                                        document.getElementById("age").value="";
+                                        return false;
+                                }else{
+                                        document.getElementById("userAge").innerHTML="";
+                                        document.getElementById("imgAge").style.display="inline";
+                                    	document.getElementById("imgAge").src="image/successImg.jpg";
+                                        return true;
+                                }
+                        }
+                        xmlhttp.open("POST", "ValidationAge.action?age="+age, true);
+                        xmlhttp.send();
+                }
+                
+                
+                function onchangeCountry(){
+                        var getCountry = document.getElementById("country").value;
+                        if(getCountry!="Please Select"){
+                                document.getElementById("userCountry").innerHTML="";
+                        }
+                        if(getCountry=="CHINA"){
+                                var address =["BeiJing","TianJing","ShangHai","ChongQing","HeBei","HeNan","YunNan","LiaoNing","HeiLongJiang","HuNan","AiHui","SanDong","XinJiang","JiangSu","ZheJiang","JiangXi"
+                                              ,"HuBei","GuangXi"];
+                                for(var i =0;i<address.length;i++ ){
+                                        //把对应的省市绑定到option中。
+                                document.getElementById("address1").options.add(new Option(address[i],address[i]));  
+                                        }
+                                }
+                        }
+                
+                
+                //判断country 是否选择。
+                function Onselect(){
+                        var getCountry = document.getElementById("country").value;
+                        if(getCountry=="Please Select"){
+                                document.getElementById("userCountry").innerHTML="<font style='color: red;font-size:12px;'>Please select a country!</font>";
+                                return false;
+                        }
+                        return true;
+                }
+                
+                //验证验证码。
+                function ValidaValidation(){
+                	alert("dsfads");
+                        var getValida = document.getElementById("randomCode").value;
+                        alert(getValida);
+                        if(getValida.length==0){
+                            document.getElementById("imgCode").style.display="inline";
+                        	document.getElementById("imgCode").src="image/inputImg.jpg";
+                                document.getElementById("spnCode").innerHTML="<font style='color: red;font-size:12px;'>Verification code cannot be empty！</font>";
+                                return false;
+                        }
+                        createXML();
+                        xmlhttp.onreadystatechange=function(){
+                                if(xmlhttp.responseText=="true"){
+                                	alert("asdf");
+                                        document.getElementById("spnCode").innerHTML="";
+                                        document.getElementById("imgCode").style.display="inline";
+                                    	document.getElementById("imgCode").src="image/successImg.jpg";
+                                        return true;
+                                }else if("false"){
+                                	 document.getElementById("imgCode").style.display="inline";
+                                 	document.getElementById("imgCode").src="image/inputImg.jpg";
+                                        document.getElementById("spnCode").innerHTML="<font style='color: red;font-size:12px;'>Verification input is not correct!</font>";
+                                        getValida = document.getElementById("randomCode").value="";
+                                        return false;
+                                } 
+                                
+                        }
+                        xmlhttp.open("POST","ValidaValidation.action?getValida="+getValida,true);
+                        xmlhttp.send();
+                }
+                
+                
+                
+                
+                function clickSub(){
+                		var spanTest=document.getElementById("prompt").textContent;
+                        var str = document.getElementById("username").value;
+                        var passWord2 = document.getElementById("cfPassword").value;
+                        var passWord = document.getElementById("passWord").value;
+                        var age = document.getElementById("age").value;
+                        var getCountry = document.getElementById("country").value;
+                        var getAddress = document.getElementById("address1").value;
+                        var getValida = document.getElementById("randomCode").value;
+                        if(str.length==0){
+                                document.getElementById("prompt").innerHTML="<font style='color: red;font-size:12px;'>Username can not be empty!</font>";
+                        return false;
+                        }
+                         if(spanTest.length!=0){
+                                return false;
+                        }
+                         if(passWord.length==0){
+                                document.getElementById("upm").innerHTML="<font style='color: red;font-size:12px;'>Password can not be blank！</font>";
+                                return false;
+                        }
+                         if(passWord2.length==0){
+                        	 
+                                document.getElementById("secondpd").innerHTML="<font style='color: red;font-size:12px;'>Repeat password can not be empty!</font>";
+                                return false;
+                        }
+                         if(age.length==0){
+                                document.getElementById("userAge").innerHTML="<font style='color: red;font-size:12px;'>Age can not be blank!</font>";
+                                return false;
+                        }
+                         if(getCountry=="Please Select"){
+                                 document.getElementById("userCountry").innerHTML="<font style='color: red;font-size:12px;'>Please select a country!</font>";
+                                return false;
+                        }
+                         if(getAddress=="Please Select"){
+                                 document.getElementById("getSpnAddress").innerHTML="<font style='color: red;font-size:12px;'>Please select a address!</font>";
+                                 return false;
+                         }else{
+                                 document.getElementById("getSpnAddress").innerHTML="";
+                         }
+                        if(getValida.length==0){
+                       	 document.getElementById("spnCode").innerHTML="<font style='color: red;font-size:12px;'>Verification input is not correct!</font>";
+                       	 return false;
+                        }
+                }
 </script>
 
 </head>
-<%
-	String name = (String) request.getSession().getAttribute("name");
-	System.out.print(name);
-%>
-<body>
+
+<body onload="document.forms[0].reset()">
 	<form action="AddUser.do" method="post">
 		<table>
 			<tr>
-				<td colspan="3"><h2>Fill in the user registration
-						information</h2></td>
+				<td class="TabTd1" colspan="4"><h2>Fill in the user
+						registration information</h2></td>
 			</tr>
 
-			<tr>
-				<td>userName</td>
-				<td><input type="text" name="userName" id="username"
-					onfocus="onfocusText('prompt','Please enter your user name!!!')" /></td>
+			<tr class="TrClass">
+				<td class="TdClass">userName</td>
+				<td class="TdInputClass"><input class="InputClass" type="text"
+					name="userName" id="username" onblur="return addUserAjax();"
+					onfocus="Isonfocus();" /></td>
+				<td class="TdImgClass"><img alt="" src="" style="display: none"
+					id="img" /></td>
 				<td><span id="prompt"></span></td>
 			</tr>
 
-			<tr>
-				<td>passWord</td>
-				<td><input type="password" name="passWord" id="passWord" /></td>
-				<td><span></span></td>
+			<tr class="TrClass">
+				<td class="TdClass">passWord</td>
+				<td><input type="password" name="passWord" id="passWord"
+					onblur="return ump();" /></td>
+				<td class="TdImgClass"><img alt="" src="" style="display: none"
+					id="imgPwd" /></td>
+				<td><span id="upm"></span></td>
 			</tr>
-			<tr>
-				<td>confirm passWord</td>
-				<td><input type="password" name="cfPassword" id="cfPassword" /></td>
-				<td></td>
+			<tr class="TrClass">
+				<td class="TdClass">confirm passWord</td>
+				<td><input type="password" name="cfPassword" id="cfPassword"
+					onblur="return umpSecond();" /></td>
+				<td class="TdImgClass"><img alt="" src="" style="display: none"
+					id="imgPwd2" /></td>
+				<td><span id="secondpd"></span></td>
 			</tr>
-			<tr>
-				<td>sex</td>
+
+			<tr class="TrClass">
+				<td class="TdClass">age</td>
+				<td><input type="text" name="age" id="age"
+					onblur="return ValidationAge();" /></td>
+				<td class="TdImgClass"><img alt="" src="" style="display: none"
+					id="imgAge" /></td>
+				<td><span id="userAge"></span></td>
+			</tr>
+
+			<tr class="TrClass">
+				<td class="TdClass">sex</td>
 				<td><input type="radio" name="sex" id="sex1" value="male"
 					checked="checked" />male <input type="radio" name="sex" id="sex2"
 					value="female" />female</td>
-				<td><span></span></td>
-			</tr>
-			<tr>
-				<td>age</td>
-				<td><input type="text" name="age" id="age" /></td>
+				<td class="TdImgClass"><img alt="" src="" style="display: none"
+					id="img" /></td>
 				<td><span></span></td>
 			</tr>
 
-			<tr>
-				<td>country</td>
-				<td><select name="country" id="country">
+			<tr class="TrClass">
+				<td class="TdClass">country</td>
+				<td><select name="Cty" id="country"
+					onchange="return onchangeCountry();" onblur="return Onselect();">
+						<option selected="selected" value="Please Select">Please
+							Select</option>
 						<c:forEach items="${countryList}" var="lis">
-							<option>${lis.country}</option>
+							<option value="${lis.country}">${lis.country}</option>
 						</c:forEach>
-				</select></td>
-				<td></td>
-			</tr>
-
-			<tr>
-				<td>address</td>
-				<td><select name="address" id="address">
 
 				</select></td>
-				<td><span></span></td>
+				<td class="TdImgClass"><img alt="" src="" style="display: none"
+					id="img" /></td>
+				<td><span id="userCountry"></span></td>
 			</tr>
 
-			<tr>
+			<tr class="TrClass">
+				<td class="TdClass">address</td>
+				<td><select name="address" id="address1">
+						<option selected="selected" value="Please Select">Please
+							Select</option>
+				</select></td>
+				<td class="TdImgClass"><img alt="" src="" style="display: none"
+					id="img" /></td>
+				<td><span id="getSpnAddress"></span></td>
+			</tr>
+
+			<tr class="TrClass">
+				<td class="TdClass">Validation Code</td>
+				<td><input type="text" name="randomCode" id="randomCode"
+					onblur="return ValidaValidation();" /> 
+				<img title="点击更换" onclick="javascript:refresh(this);"
+					src="imageServlet" /></td>
+				<td class="TdImgClass"><img alt="" src="" style="display: none"
+					id="imgCode" /></td>
+				<td><span id="spnCode"></span></td>
+			</tr>
+
+			<tr class="TrClass">
 				<td colspan="3"><input type="submit" name="submit" id="submit"
-					value="Submit" onclick="return onClickSubmit();" /></td>
+					value="Submit" onclick="return clickSub();" /></td>
 			</tr>
 		</table>
 	</form>

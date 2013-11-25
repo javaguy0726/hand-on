@@ -39,7 +39,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	<table>
   		<tr>
   			<td colspan="2" style="text-align: center"><h2>Sign in</h2></td>
-  			<td ><img src="image/successImg.jpg"/></td>
   		</tr>
   		<tr>
   			<td>USERNAME</td>

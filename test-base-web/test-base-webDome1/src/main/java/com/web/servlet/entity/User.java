@@ -3,17 +3,17 @@ package com.web.servlet.entity;
 import java.io.Serializable;
 
 public class User implements Serializable {
-	private String id;
+	private int id;
 	private String username;
 	private String password;
 	private String sex;
 	private int age;
 	private String country;
 	private String address;
-	public String getId() {
+	public int getId() {
 		return id;
 	}
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getUsername() {
@@ -53,7 +53,7 @@ public class User implements Serializable {
 		this.address = address;
 	}
 	public User(){}
-	public User(String id, String username, String password, String sex,
+	public User(int id, String username, String password, String sex,
 			int age, String country, String address) {
 		super();
 		this.id = id;

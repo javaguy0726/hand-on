@@ -48,20 +48,8 @@
 	<!-- 验证码servlet -->
 	<servlet>
 	    <servlet-name>ImageServlet</servlet-name>
-	    <servlet-class>com.web.servlet.service.ImageServlet</servlet-class>
+	    <servlet-class>com.web.servlet.service。ImageServlet</servlet-class>
 	 </servlet>
-	 
-	 <!-- 验证验证码 -->
-	 <servlet>
-	    <servlet-name>ImgValidation</servlet-name>
-	    <servlet-class>com.web.servlet.service.TheUserServlet</servlet-class>
-	 </servlet>
-	 
-	 
-	  <servlet-mapping>
-	    <servlet-name>ImgValidation</servlet-name>
-	    <url-pattern>/ValidaValidation.action</url-pattern>
-	 </servlet-mapping>
 	
 	 <servlet-mapping>
 	    <servlet-name>ImageServlet</servlet-name>
@@ -109,6 +97,10 @@
 	<servlet-mapping>
 		<servlet-name>userCountyServlet</servlet-name>
 		<url-pattern>/countryServlet.action</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>sss</servlet-name>
+		<url-pattern>/sss</url-pattern>
 	</servlet-mapping>
 	
 	

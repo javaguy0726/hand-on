@@ -42,4 +42,15 @@ public class UserServletTest {
 			System.out.println(list.get(i));
 		}
 	}
+	
+	@Test
+	public void validationCode_test(){
+		String a =implementation.intNumber();
+		System.out.print(a);
+	}
+	
+	@Test
+	public void sys_test(){
+		System.out.println("asdf");
+	}
 }

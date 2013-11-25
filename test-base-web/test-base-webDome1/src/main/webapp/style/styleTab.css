@@ -1,0 +1,59 @@
+@CHARSET "UTF-8";
+table{
+	border:solid #FF0000 2px;
+	background-color:#CCCCCC;
+	margin:auto;
+	width:550px;
+	height:600px;
+	}
+
+.TabTd1{
+	
+	text-align:center;
+	color:red;
+	size:28px;
+	height:15px;
+	background-color:#000000;
+	
+}
+.TdClass{
+	width:110px;
+	height: 15x;
+	text-align:right;
+	padding-right:15px;
+}
+
+.TrClass{
+	height:50px;
+	}
+	
+.InputClass{
+	width:140px;
+	height:24px;
+}
+
+.TdInputClass{
+	width:100px;
+	height:30px;
+	.TdSpanClass{
+	width:40px;
+	height:30px;
+	font-size:12px;
+	color:red;
+	text-align:center;
+}
+
+.TdImgClass{
+	width:15px;
+	height:30px;
+	text-align:left;
+	background-color:red;
+}
+
+.TdSpanClass{
+	width:160px;
+	height:30px;
+	font-size:12px;
+	color:red;
+}
+

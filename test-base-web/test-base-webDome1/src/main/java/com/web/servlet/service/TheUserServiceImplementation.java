@@ -3,6 +3,7 @@ package com.web.servlet.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.jsp.jstl.sql.Result;
 
@@ -71,4 +72,20 @@ public class TheUserServiceImplementation {
 		return userApiServlet.ResuleToList(result, "address");
 	}
 	
+	//生成四个随机数
+	public String intNumber(){
+		
+		Random rd = new Random();
+		int[] intNum = new int[4];
+		String[] strNum = new String[4];
+		for (int i = 0; i < intNum.length; i++) {
+			 strNum[i] = String.valueOf(rd.nextInt(9));
+		}
+		StringBuffer sb = new StringBuffer();
+		for(int i = 0; i < strNum.length; i++){
+		 sb. append(strNum[i]);
+		}
+		String strVali =sb.toString();
+		return strVali;
+	}
 }
