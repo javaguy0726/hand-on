@@ -200,9 +200,7 @@ function refresh(obj) {
                 
                 //验证验证码。
                 function ValidaValidation(){
-                	alert("dsfads");
                         var getValida = document.getElementById("randomCode").value;
-                        alert(getValida);
                         if(getValida.length==0){
                             document.getElementById("imgCode").style.display="inline";
                         	document.getElementById("imgCode").src="image/inputImg.jpg";
@@ -212,7 +210,6 @@ function refresh(obj) {
                         createXML();
                         xmlhttp.onreadystatechange=function(){
                                 if(xmlhttp.responseText=="true"){
-                                	alert("asdf");
                                         document.getElementById("spnCode").innerHTML="";
                                         document.getElementById("imgCode").style.display="inline";
                                     	document.getElementById("imgCode").src="image/successImg.jpg";
@@ -221,7 +218,6 @@ function refresh(obj) {
                                 	 document.getElementById("imgCode").style.display="inline";
                                  	document.getElementById("imgCode").src="image/inputImg.jpg";
                                         document.getElementById("spnCode").innerHTML="<font style='color: red;font-size:12px;'>Verification input is not correct!</font>";
-                                        getValida = document.getElementById("randomCode").value="";
                                         return false;
                                 } 
                                 
@@ -291,17 +287,17 @@ function refresh(obj) {
 
 			<tr class="TrClass">
 				<td class="TdClass">userName</td>
-				<td class="TdInputClass"><input class="InputClass" type="text"
+				<td class="TdInputClass" style="width:50;"><input class="InputClass" type="text"
 					name="userName" id="username" onblur="return addUserAjax();"
 					onfocus="Isonfocus();" /></td>
 				<td class="TdImgClass"><img alt="" src="" style="display: none"
 					id="img" /></td>
-				<td><span id="prompt"></span></td>
+				<td class="TdSpanClass"><span id="prompt"></span></td>
 			</tr>
 
 			<tr class="TrClass">
 				<td class="TdClass">passWord</td>
-				<td><input type="password" name="passWord" id="passWord"
+				<td><input class="InputClass" type="password" name="passWord" id="passWord"
 					onblur="return ump();" /></td>
 				<td class="TdImgClass"><img alt="" src="" style="display: none"
 					id="imgPwd" /></td>
@@ -309,7 +305,7 @@ function refresh(obj) {
 			</tr>
 			<tr class="TrClass">
 				<td class="TdClass">confirm passWord</td>
-				<td><input type="password" name="cfPassword" id="cfPassword"
+				<td><input class="InputClass" type="password" name="cfPassword" id="cfPassword"
 					onblur="return umpSecond();" /></td>
 				<td class="TdImgClass"><img alt="" src="" style="display: none"
 					id="imgPwd2" /></td>
@@ -318,7 +314,7 @@ function refresh(obj) {
 
 			<tr class="TrClass">
 				<td class="TdClass">age</td>
-				<td><input type="text" name="age" id="age"
+				<td><input class="InputClass" type="text" name="age" id="age"
 					onblur="return ValidationAge();" /></td>
 				<td class="TdImgClass"><img alt="" src="" style="display: none"
 					id="imgAge" /></td>
@@ -327,7 +323,7 @@ function refresh(obj) {
 
 			<tr class="TrClass">
 				<td class="TdClass">sex</td>
-				<td><input type="radio" name="sex" id="sex1" value="male"
+				<td><input  type="radio" name="sex" id="sex1" value="male"
 					checked="checked" />male <input type="radio" name="sex" id="sex2"
 					value="female" />female</td>
 				<td class="TdImgClass"><img alt="" src="" style="display: none"
@@ -364,17 +360,23 @@ function refresh(obj) {
 
 			<tr class="TrClass">
 				<td class="TdClass">Validation Code</td>
-				<td><input type="text" name="randomCode" id="randomCode"
+				<td><input class="InputClass" type="text" name="randomCode" id="randomCode"
 					onblur="return ValidaValidation();" /> 
-				<img title="点击更换" onclick="javascript:refresh(this);"
-					src="imageServlet" /></td>
+				</td>
 				<td class="TdImgClass"><img alt="" src="" style="display: none"
 					id="imgCode" /></td>
 				<td><span id="spnCode"></span></td>
 			</tr>
+			
+			<tr>
+			<td class="TrClass"></td>
+				<td colspan="3" style="font-size:12px; padding-top:-10px;"><img title="点击更换" onclick="javascript:refresh(this);"
+					src="imageServlet" />Click on the image change the verification code.</td>
+			</tr>
 
-			<tr class="TrClass">
-				<td colspan="3"><input type="submit" name="submit" id="submit"
+			<tr>
+				<td></td>
+				<td colspan="3" ><input type="submit" name="submit" id="submit"
 					value="Submit" onclick="return clickSub();" /></td>
 			</tr>
 		</table>

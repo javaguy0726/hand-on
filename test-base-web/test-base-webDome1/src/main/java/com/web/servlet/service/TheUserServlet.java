@@ -110,8 +110,7 @@ public class TheUserServlet extends HttpServlet {
 				System.out.println(validationServlet+"sadfsda");
 				if(validation.equals(validationServlet)){
 					response.getWriter().write("true");
-				}else
-					response.getWriter().write("false");
 			}
 		}
 	}
+}
